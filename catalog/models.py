@@ -45,6 +45,9 @@ class Book(models.Model):
     display_genre.short_description = 'Genre'
 
 
+    class Meta:
+        ordering = ['title']
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)

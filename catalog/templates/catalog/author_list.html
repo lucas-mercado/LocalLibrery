@@ -2,20 +2,23 @@
 
 {% block content %}
 
-    <h1>Author List</h1>
+    <h1 style="text-align: center;">Author List</h1>
 
     {% if author_list %}
-    <ul>
-        {% for author in author_list %}
-        <li>
-            <a href="{{ author.get_absolute_url }}">
-            {{ author }} ({{author.date_of_birth}} 
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
+         <table style="width: 100%;">
+            <tr>
+                <th>NOMBRE</th>
+                <th>APELLIDO</th>
+            </tr>
+            {% for author in author_list %}
+            <tr style="text-align: center;">
+                    <td><strong>{{author.first_name}}</strong></td>
+                    <td><strong>{{author.last_name}}</strong></td>
+            </tr>
+            {% endfor %}
+         </table>
     {% else %}
-    <p> There are  no authors available.</p>
+        <p> There are  no authors available.</p>
     {% endif %} 
 
 {% endblock %}

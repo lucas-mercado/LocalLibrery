@@ -23,9 +23,9 @@ def index(request):
 class BookListView(generic.ListView):
     model = Book
     paginate_by = 10
-    #context_object_name = 'my_book_list'   # your own name for the list as a template variable
-    #queryset = Book.objects.filter(title__icontains='war')[:5] # Get 5 books containing the title war
-    #template_name = 'books/book_list.html'  # Specify your own template name/location
+    context_object_name = 'book_list'   # your own name for the list as a template variable
+    queryset = Book.objects.all()
+    template_name = 'books/book_list.html'  # Specify your own template name/location
 
     #def get_queryset(self):
         # Get 5 books containing the title war
@@ -35,12 +35,12 @@ class BookListView(generic.ListView):
     #Primero obtener el contexto existente desde nuestra superclase.
     #Luego añadir tu nueva información de contexto.
     #Luego devolver el nuevo contexto (actualizado).
-    #def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        #context = super(BookListView, self).get_context_data(**kwargs)
+        context = super(BookListView, self).get_context_data(**kwargs)
         # Get the blog from id and add it to the context
         #context['some_data'] = 'This is just some data'
-        #return context
+        return context
 
 
 class BookDetailView(generic.DetailView):
@@ -64,3 +64,17 @@ def book_detail_view(request, pk):
 
 class AuthorListView(generic.ListView):
     model = Author
+    context_object_name = 'author_list'   # your own name for the list as a template variable
+    queryset = Author.objects.all()
+    template_name = 'authors/author_list.html'  # Specify your own template name/location
+    
+    #Cuando se hace esto es importante seguir este patrón:
+    #Primero obtener el contexto existente desde nuestra superclase.
+    #Luego añadir tu nueva información de contexto.
+    #Luego devolver el nuevo contexto (actualizado).
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(AuthorListView, self).get_context_data(**kwargs)
+        # Get the blog from id and add it to the context
+        #context['some_data'] = 'This is just some data'
+        return context
