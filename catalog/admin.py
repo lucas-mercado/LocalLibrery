@@ -44,7 +44,7 @@ admin.site.register(Book, AdminBook)
 
 
 class AdminBookInstance(admin.ModelAdmin):
-    list_filter = ('status', 'due_back')
+    list_filter = ('status', 'due_back','borrower')
     list_display = ('book', 'status', 'id','due_back')
     # Cada sección tiene su propio título
     fieldsets = (
@@ -52,7 +52,7 @@ class AdminBookInstance(admin.ModelAdmin):
             'fields': ('book', 'imprint', 'id')
         }),
         ('Availability', {
-            'fields': ('status', 'due_back')
+            'fields': ('status', 'due_back', 'borrower')
         }),
     )
 

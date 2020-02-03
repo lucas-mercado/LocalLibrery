@@ -9,3 +9,4 @@ urlpatterns += [url(r'^book/$', views.BookListView.as_view(), name='books'),]
 
 #lista autor
 urlpatterns += [url(r'^author/$', views.AuthorListView.as_view(), name='authors'), ]
+urlpatterns += [url(r'^mybooks/$', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'), ]
