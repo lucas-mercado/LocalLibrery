@@ -6,3 +6,17 @@
 .rigth{
    float : right;
 }
+
+th {
+    text-align: center;
+    border: 2px solid black;
+    background: azure;
+}
+tr td {
+    text-align: center;
+    border: 2px solid black;
+}
+
+h1 {
+    color: blue;
+}
