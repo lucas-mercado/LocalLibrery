@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Book,BookInstance,Author,Genre
 from django.views import generic
+from django.http import Http404
 # Create your views here.
 
 
@@ -15,8 +16,6 @@ def index(request):
     # Number of visits to this view, as counted in the session variable.
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits + 1
-
-
     return render(
         request,
         'index.html',
@@ -27,43 +26,59 @@ def index(request):
     )
 
 
-class BookListView(generic.ListView):
-    model = Book
-    paginate_by = 10
+def list_book(request):
+    context = {'books': Book.objects.all()}
+    return render(request, 'catalog/book_list.html', context)
+
+
+def book_detail(request, book_id):
+    try:
+        book = Book.objects.get(pk=book_id)
+    except Book.DoesNotExist:
+        raise Http404("Book does not exist")
+    context = {
+        'book': book
+    }
+    return render(request, 'catalog/book_detail.html', context)
+
+#class BookListView(generic.ListView):
+#    model = Book
+#    paginate_by = 10
 
     #variable que se va usar en la template
-    context_object_name = 'book_list'
+#    context_object_name = 'book_list'
     #consulta
-    queryset = Book.objects.all()
+#    queryset = Book.objects.all()
     #template ubicacion/nombre
-    template_name = 'books/book_list.html'  # Specify your own template name/location
+#    template_name = 'catalog/book_list.html'  # Specify your own template name/location
     
     #Cuando se hace esto es importante seguir este patrón:
     #Primero obtener el contexto existente desde nuestra superclase.
     #Luego añadir tu nueva información de contexto.
     #Luego devolver el nuevo contexto (actualizado).
-    def get_context_data(self, **kwargs):
+#    def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        context = super(BookListView, self).get_context_data(**kwargs)
+#        context = super(BookListView, self).get_context_data(**kwargs)
         # Get the blog from id and add it to the context
         #context['some_data'] = 'This is just some data'
-        return context
+#        return context
 
 
-class BookDetailView(generic.DetailView):
-    model = Book
+#class BookDetailView(generic.DetailView):
+    #model = Book
 
-    def book_detail_view(request, pk):
-        try:
-            book_id = Book.objects.get(pk=pk)
-        except Book.DoesNotExist:
-            raise Http404("Book does not exist")
+    #def book_detail_view(request, book_id):
+        #try:
+         #   book = Book.objects.get(pk=book_id)
+        #except Book.DoesNotExist:
+        #    raise Http404("Book does not exist")
+        #context = {'book': book,}
         #book_id=get_object_or_404(Book, pk=pk)
-        return render(
-            request,
-            'book-detail/book_detail.html',
-            context={'book': book_id, }
-        )
+        #return render(
+        #    request,
+        #    'catalog/book_detail.html',
+        #    context
+        #)
 
 
 class AuthorListView(generic.ListView):

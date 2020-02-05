@@ -1,0 +1,13 @@
+{% extends "base_template.html" %}
+
+{% block content %}
+<h1>Title: {{ book.title }}</h1>
+
+<p><strong>Author:</strong> <a href="">{{ book.author }}</a></p> <!-- author detail link not yet defined -->
+<p><strong>Summary:</strong> {{ book.sumary }}</p>
+<p><strong>ISBN:</strong> {{ book.ISBN }}</p>
+<p><strong>Language:</strong> {{ book.lenguage }}</p>
+<p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %},
+    {% endif %}{% endfor %}</p>
+<a href=" {% url 'books' %} "> Back Home </a>
+{% endblock %}

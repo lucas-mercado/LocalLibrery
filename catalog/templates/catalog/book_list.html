@@ -1,11 +1,15 @@
 {% extends "base_template.html" %} {% block content %}
+
+
 <h1>Book List</h1>
 
-{% if book_list %}
+{% if books %}
 <ul>
-  {% for book in book_list %}
+
+  {% for book in books %}
   <li>
-    <a href="">{{ book.title }}</a> ({{book.author}})
+    <!-- podemos ver detalles url 'book-detail' book.id --!>
+    {{ book.id}} - <a href="{% url 'book-detail' book.id %}">{{ book.title }}</a> ({{book.author}})
   </li>
   {% endfor %}
 </ul>
